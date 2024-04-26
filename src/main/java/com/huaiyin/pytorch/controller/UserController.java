@@ -32,6 +32,7 @@ public class UserController {
      */
     @ApiOperation("用户登陆")
     @PostMapping("/login")
+    // todo RequestBody和Validated注解使用失效
     public ApiResponse<String> login(HttpServletRequest request,
                                        @RequestBody UserDTOLoginForm user){
          return userService.login(request,user);
