@@ -16,6 +16,7 @@ public class User implements Serializable {
 
     private Long id;
 
+    @TableField(fill = FieldFill.INSERT) //插入时填充字段
     private String userName;
 
     private String phone;

@@ -1,6 +1,8 @@
 package com.huaiyin.pytorch.utils;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.huaiyin.pytorch.dto.form.UserDTOLoginForm;
+import com.huaiyin.pytorch.entity.User;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,13 +23,20 @@ public class LoginIntercepter implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 	                         HttpServletResponse response, Object handler) throws Exception {
 		// 判断当前用户是否登陆(从session里面拿用户信息)
-		Object userDTO = request.getSession().getAttribute("user");
-		if (userDTO == null){
+		Object user = request.getSession().getAttribute("user");
+		if (user == null){
 			// 没有用户信息，拦截
 			response.setStatus(401);
 			return false;
 		}
+		// 将查询到的用户信息存放到ThreadLocal中,方便其他请求来获取用户的信息
+		UserHolder.set((UserDTOLoginForm) user);
 		// 放行
 		return true;
+	}
+
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+		 UserHolder.remove();
 	}
 }

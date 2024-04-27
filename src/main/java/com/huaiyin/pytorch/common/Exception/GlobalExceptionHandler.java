@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -32,6 +33,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		log.error(e.toString(), e);
 		return ApiResponse.error("服务器异常");
 	}
+
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+		log.error("MethodArgumentNotValidException:", ex);
+		ApiResponse<Object> response = new ApiResponse<>();
+		Map<String, String> errors = new HashMap<>();
+		ex.getFieldErrors().forEach(p -> {
+			errors.put(p.getField(), p.getDefaultMessage());
+		});
+		response.error(ApiResponseCode.PARAMETER_INVALID.getCode(), errors);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
 	/**
 	 * BindException异常处理
 	 * BindException: 作用于@Validated @Valid 注解

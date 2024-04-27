@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface UserService extends IService<User> {
 
-	ApiResponse<String> login(HttpServletRequest request, UserDTOLoginForm user);
+	ApiResponse<Object> login(HttpServletRequest request, UserDTOLoginForm user);
 
-	ApiResponse<User> register(UserDTORegisterForm userForm);
+	ApiResponse<String> register(UserDTORegisterForm userForm);
 }

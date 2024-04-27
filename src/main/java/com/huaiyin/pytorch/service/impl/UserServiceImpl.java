@@ -3,11 +3,13 @@ package com.huaiyin.pytorch.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.huaiyin.pytorch.common.dto.ApiResponse;
+import com.huaiyin.pytorch.dto.UserDTO;
 import com.huaiyin.pytorch.dto.form.UserDTOLoginForm;
 import com.huaiyin.pytorch.dto.form.UserDTORegisterForm;
 import com.huaiyin.pytorch.entity.User;
 import com.huaiyin.pytorch.mapper.UserMapper;
 import com.huaiyin.pytorch.service.UserService;
+import com.huaiyin.pytorch.utils.UserHolder;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.util.DigestUtils;
@@ -23,7 +25,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	 * @return
 	 */
 	@Override
-	public ApiResponse<String> login(HttpServletRequest request, UserDTOLoginForm user) {
+	public ApiResponse<Object> login(HttpServletRequest request, UserDTOLoginForm user) {
 		//1、将页面提交的密码password进行md5加密处理
 		String password = user.getPassword();
 		password = DigestUtils.md5DigestAsHex(password.getBytes());
@@ -35,11 +37,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 		//3、如果没有查询到则返回登录失败结果
 		if(newUser == null || !newUser.getPassword().equals(password)){
-			return ApiResponse.error("登录失败");
+			return ApiResponse.error("登陆失败");
 		}
 		//4、登录成功，将员工id存入Session并返回登录成功结果
-		request.getSession().setAttribute("User",newUser.getId());
-		return ApiResponse.success("登陆成功");
+		request.getSession().setAttribute("user",user);
+		UserDTO userDTO = new UserDTO();
+		userDTO.setId(newUser.getId());
+		userDTO.setPhone(newUser.getPhone());
+		userDTO.setUserName(newUser.getUserName());
+		return ApiResponse.success(userDTO);
 	}
 	/**
 	 * 用户注册
@@ -47,7 +53,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	 * @return
 	 */
 	@Override
-	public ApiResponse<User> register(UserDTORegisterForm userForm) {
+	public ApiResponse<String> register(UserDTORegisterForm userForm) {
+
 		// 根据手机号去数据库查询用户是否存在
 		LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
 		queryWrapper.eq(User::getPhone,userForm.getPhone());
@@ -59,6 +66,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		user.setPhone(userForm.getPhone());
 		user.setPassword(DigestUtils.md5DigestAsHex(userForm.getPassword().getBytes()));
 		save(user);
-		return ApiResponse.success(user);
+		return ApiResponse.success("注册成功");
 	}
 }

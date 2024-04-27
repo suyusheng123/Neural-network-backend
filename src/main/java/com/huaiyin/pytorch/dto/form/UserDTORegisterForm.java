@@ -19,13 +19,13 @@ import javax.validation.constraints.Pattern;
 public class UserDTORegisterForm {
 
 	@ApiModelProperty(value = "手机号")
-	@NotBlank(message = "手机号不能为空")
-	@Pattern(regexp = "^1\\d{10}$", message = "手机号格式错误！")
+	 @NotBlank(message = "手机号不能为空")
+	 @Pattern(regexp = "^1\\d{10}$", message = "手机号格式错误！")
 	private String phone;
 
 	@ApiModelProperty(value = "密码")
-	@NotBlank(message = "请输入密码")
-	@Pattern(regexp = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\\\W]{6,18}$", message = "密码长度需在6~18位字符，且必须包含字母和数字！")
+	 @NotBlank(message = "请输入密码")
+	 @Pattern(regexp = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\\\W]{6,18}$", message = "密码长度需在6~18位字符，且必须包含字母和数字！")
 	private String password;
 
 	@ApiModelProperty(value = "确认密码")

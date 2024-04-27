@@ -51,6 +51,14 @@ public class ApiResponse<T> {
 	public static <T> ApiResponse<T> success() {
 		return success(null);
 	}
+	public static <T> ApiResponse<T> success(String msg){
+		ApiResponse<T> response = new ApiResponse<>();
+		response.setData(null);
+		response.setCode(ApiResponseCode.SUCCESS.getCode());
+		response.setCodeMessage(msg);
+		response.setSuccess(true);
+		return response;
+	}
 
 	public static <T> ApiResponse<T> success(T data) {
 		ApiResponse<T> response = new ApiResponse<>();
