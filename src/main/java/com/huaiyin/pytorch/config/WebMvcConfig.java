@@ -52,7 +52,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 						"/webjars/**",
 						"/swagger-ui.html",
 						"/doc.html",
-						"/favicon.ico"
+						"/favicon.ico",
+						"/image/**"
 						);
 	}
 

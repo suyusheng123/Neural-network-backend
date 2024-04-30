@@ -10,6 +10,11 @@ spring:
       url: jdbc:mysql://localhost:3306/pytorch-model?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: 123456
+  servlet:
+      # upload file
+        multipart:
+          max-file-size: 50MB #单个上传文件的最大大小
+          max-request-size: 50MB #整个请求的大小不能超过 50 兆字节（MB）
 mybatis-plus:
   configuration:
     #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
@@ -18,6 +23,7 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
+
 
 
 
