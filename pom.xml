@@ -99,14 +99,43 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.microsoft.onnxruntime</groupId>
+            <artifactId>onnxruntime</artifactId>
+            <version>1.16.1</version>
+        </dependency>
 
-            <dependency>
-                <groupId>org.python</groupId>
-                <artifactId>jython-standalone</artifactId>
-                <version>2.7.2</version>
-            </dependency>
-        </dependencies>
+        <!--        <dependency> 切换gpu后一定要maven update,否则会报错 onnxruntime 和 onnxruntime_gpu不能同时使用，使用这个请注释上面那个
+                    <groupId>com.microsoft.onnxruntime</groupId>
+                    <artifactId>onnxruntime_gpu</artifactId>
+                    <version>1.16.1</version>
+                </dependency>-->
 
+        <!--
+
+               本质上是使用opencv 和 ffmpeg
+
+        用 javacv-platform 和  ffmpeg-platform 两个pom依赖，可以完全摆脱，dll和so依赖库，不需要引入任何外部依赖，真正做到linux上可运行，但是这两个库大小2-3G，可以缩小有兴趣自己研究。
+
+        https://blog.csdn.net/boling_cavalry/article/details/119062543
+
+        https://blog.csdn.net/eguid_1/article/details/117277841
+
+        https://www.ithere.net/article/1486255614874501122
+
+        -->
+
+        <!--  <dependency>
+             <groupId>org.bytedeco</groupId>
+             <artifactId>javacv-platform</artifactId>
+             <version>1.5.7</version>
+         </dependency> -->
+        <dependency>
+            <groupId>org.openpnp</groupId>
+            <artifactId>opencv</artifactId>
+            <version>4.7.0-0</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

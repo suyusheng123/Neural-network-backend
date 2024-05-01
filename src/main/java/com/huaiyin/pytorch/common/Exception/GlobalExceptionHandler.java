@@ -1,4 +1,5 @@
 package com.huaiyin.pytorch.common.Exception;
+import ai.onnxruntime.OrtException;
 import com.huaiyin.pytorch.common.constant.ApiResponseCode;
 import com.huaiyin.pytorch.common.dto.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 

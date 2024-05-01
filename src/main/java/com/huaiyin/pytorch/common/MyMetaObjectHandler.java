@@ -34,7 +34,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 		// 设置公共字段的值
 		metaObject.setValue("createTime", LocalDateTime.now());
 		metaObject.setValue("updateTime", LocalDateTime.now());
-		metaObject.setValue("userName", UserNameGenerator.getStringRandom(6));
 	}
 
 	/**

@@ -30,7 +30,7 @@ public class LoginIntercepter implements HandlerInterceptor {
 			return false;
 		}
 		// 将查询到的用户信息存放到ThreadLocal中,方便其他请求来获取用户的信息
-		UserHolder.set((UserDTOLoginForm) user);
+		UserHolder.set((Long)user);
 		// 放行
 		return true;
 	}

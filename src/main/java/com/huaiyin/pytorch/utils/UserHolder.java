@@ -13,13 +13,13 @@ import com.huaiyin.pytorch.entity.User;
  * @Version 1.0
  */
 public class UserHolder {
-	private static ThreadLocal<UserDTOLoginForm> userHolder = new ThreadLocal<>();
+	private static ThreadLocal<Long> userHolder = new ThreadLocal<>();
 
-	public static void set(UserDTOLoginForm user) {
-		userHolder.set(user);
+	public static void set(Long userId) {
+		userHolder.set(userId);
 	}
 
-	public static UserDTOLoginForm get() {
+	public static Long get() {
 		return userHolder.get();
 	}
 

@@ -3,7 +3,7 @@ server:
 spring:
   application:
     #应用的名称，可选
-    name: reggie_take_out
+    name: pytorch-model
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -23,6 +23,11 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
+image:
+  upload: C:/Users/Lenovo/Desktop/photo-recognize-project/springboot-pytorch-backend/src/main/resources/static/upload/
+  recognize: C:/Users/Lenovo/Desktop/photo-recognize-project/springboot-pytorch-backend/src/main/resources/static/recognize/
+model:
+  path: C:/Users/Lenovo/Desktop/photo-recognize-project/springboot-pytorch-backend/src/main/resources/static/model/yolov8n.onnx
 
 
 

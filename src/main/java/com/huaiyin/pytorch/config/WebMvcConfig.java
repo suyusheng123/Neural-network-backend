@@ -53,7 +53,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 						"/swagger-ui.html",
 						"/doc.html",
 						"/favicon.ico",
-						"/image/**"
+						// 暂时先不拦截，做测试
+						"/common/**"
 						);
 	}
 

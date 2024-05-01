@@ -10,6 +10,7 @@ import com.huaiyin.pytorch.entity.User;
 import com.huaiyin.pytorch.mapper.UserMapper;
 import com.huaiyin.pytorch.service.UserService;
 import com.huaiyin.pytorch.utils.UserHolder;
+import com.huaiyin.pytorch.utils.UserNameGenerator;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.util.DigestUtils;
@@ -40,7 +41,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 			return ApiResponse.error("登陆失败");
 		}
 		//4、登录成功，将员工id存入Session并返回登录成功结果
-		request.getSession().setAttribute("user",user);
+		request.getSession().setAttribute("user",newUser.getId());
 		UserDTO userDTO = new UserDTO();
 		userDTO.setId(newUser.getId());
 		userDTO.setPhone(newUser.getPhone());
@@ -63,6 +64,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 			return ApiResponse.error("用户已存在");
 		}
 		User user = new User();
+		user.setUserName(UserNameGenerator.getStringRandom(6));
 		user.setPhone(userForm.getPhone());
 		user.setPassword(DigestUtils.md5DigestAsHex(userForm.getPassword().getBytes()));
 		save(user);
