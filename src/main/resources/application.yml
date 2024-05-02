@@ -23,9 +23,12 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
+#      原始文件上传
 image:
   upload: C:/Users/Lenovo/Desktop/photo-recognize-project/springboot-pytorch-backend/src/main/resources/static/upload/
+#  识别后的文件存放路径
   recognize: C:/Users/Lenovo/Desktop/photo-recognize-project/springboot-pytorch-backend/src/main/resources/static/recognize/
+#  模型文件路径
 model:
   path: C:/Users/Lenovo/Desktop/photo-recognize-project/springboot-pytorch-backend/src/main/resources/static/model/yolov8n.onnx
 
