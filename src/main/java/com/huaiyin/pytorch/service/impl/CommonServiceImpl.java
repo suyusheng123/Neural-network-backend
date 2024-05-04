@@ -1,6 +1,7 @@
 package com.huaiyin.pytorch.service.impl;
 
 import com.huaiyin.pytorch.common.dto.ApiResponse;
+import com.huaiyin.pytorch.dto.ImageDTO;
 import com.huaiyin.pytorch.service.CommonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +38,7 @@ public class CommonServiceImpl implements CommonService {
 	private String recognizePath;
 
 	@Override
-	public ApiResponse<String> upload(MultipartFile file) {
+	public ApiResponse<ImageDTO> upload(MultipartFile file) {
 		// file是一个临时文件，需要转存到指定位置，否则本次请求完成后临时文件会删除
 		// file的原始文件名file.getOriginalFilename()
 		String original = file.getOriginalFilename();
@@ -51,6 +52,8 @@ public class CommonServiceImpl implements CommonService {
 		// 使用UUID生成文件名,防止文件名重复造成文件覆盖
 		String fileName = UUID.randomUUID().toString() + suffix;
         fileName = fileName.replaceAll("-", "");
+		// 生成一个返回给前端的文件名,不带后缀名
+		String uploadFile = fileName.substring(0, fileName.lastIndexOf("."));
 		// 创建一个目录对象
 		File dir = new File(basePath);
 		// 判断当前目录是否存在
@@ -69,7 +72,10 @@ public class CommonServiceImpl implements CommonService {
 			// 释放资源
 			file = null;
 		}
-		return ApiResponse.success(fileName);
+		// 封装返回给前端的图片对象
+		ImageDTO imageDTO = new ImageDTO();
+		imageDTO.setFile(uploadFile);
+		return ApiResponse.success(imageDTO);
 	}
 
 	/**

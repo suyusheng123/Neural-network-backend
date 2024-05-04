@@ -23,7 +23,7 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
-#      原始文件上传
+#      原始文件上传，这里改为类路径下的文件夹
 image:
   upload: C:/Users/Lenovo/Desktop/photo-recognize-project/springboot-pytorch-backend/src/main/resources/static/upload/
 #  识别后的文件存放路径

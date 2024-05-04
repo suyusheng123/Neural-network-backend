@@ -1,6 +1,7 @@
 package com.huaiyin.pytorch.controller;
 
 import com.huaiyin.pytorch.common.dto.ApiResponse;
+import com.huaiyin.pytorch.dto.ImageDTO;
 import com.huaiyin.pytorch.service.CommonService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +32,7 @@ public class CommonController {
 
 	@ApiOperation("文件上传")
 	@PostMapping("/upload")
-	public ApiResponse<String> upload(@RequestParam("file") MultipartFile file){
+	public ApiResponse<ImageDTO> upload(@RequestParam("file") MultipartFile file){
 		return commonService.upload(file);
 	}
 

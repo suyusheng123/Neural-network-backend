@@ -1,6 +1,7 @@
 package com.huaiyin.pytorch.service;
 
 import com.huaiyin.pytorch.common.dto.ApiResponse;
+import com.huaiyin.pytorch.dto.ImageDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,7 @@ public interface CommonService {
 	 * @param file
 	 * @return
 	 */
-	ApiResponse<String> upload(MultipartFile file);
+	ApiResponse<ImageDTO> upload(MultipartFile file);
 
 	void download(String name, HttpServletResponse response);
 
