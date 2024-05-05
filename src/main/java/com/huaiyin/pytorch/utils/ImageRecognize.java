@@ -215,7 +215,9 @@ public class ImageRecognize {
 			String path = recognizePath + recognizeFile;
 			Imgcodecs.imwrite(path, img);
 			record.setRecognizeTime(recognizeTime);
-			record.setNewAddress(recognizeFile.substring(0,recognizeFile.lastIndexOf(".")));
+			// todo 保存识别结果,不含图片后缀名
+//			record.setNewAddress(recognizeFile.substring(0,recognizeFile.lastIndexOf(".")));
+			record.setNewAddress(recognizeFile);
 		}
 		return record;
 	}

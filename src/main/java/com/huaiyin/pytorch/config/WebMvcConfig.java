@@ -4,6 +4,7 @@ import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.huaiyin.pytorch.common.JacksonObjectMapper;
 import com.huaiyin.pytorch.utils.LoginIntercepter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -37,7 +38,10 @@ import java.util.List;
 @Slf4j
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
-	@Override
+
+	@Value("${image.recognize}")
+	private String imageRecognizePath;
+	/*@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 登录拦截器
 		registry.addInterceptor(new LoginIntercepter()).
@@ -56,7 +60,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 						// 暂时先不拦截，做测试
 						"/common/**"
 						);
-	}
+	}*/
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -65,6 +69,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 		//swagger文件的静态资源映射
 		registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+		registry.addResourceHandler("/image/recognize/**").addResourceLocations("file:" + imageRecognizePath);
+       // todo 原始图片路径,如果不展示原始图片，可以不配置,我先注释掉
+//	   registry.addResourceHandler("/image/upload/**").addResourceLocations("classpath:/static/upload/");
 	}
 
 	@Override

@@ -10,9 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -53,7 +51,7 @@ public class CommonServiceImpl implements CommonService {
 		String fileName = UUID.randomUUID().toString() + suffix;
         fileName = fileName.replaceAll("-", "");
 		// 生成一个返回给前端的文件名,不带后缀名
-		String uploadFile = fileName.substring(0, fileName.lastIndexOf("."));
+		// String uploadFile = fileName.substring(0, fileName.lastIndexOf("."));
 		// 创建一个目录对象
 		File dir = new File(basePath);
 		// 判断当前目录是否存在
@@ -62,19 +60,33 @@ public class CommonServiceImpl implements CommonService {
 			dir.mkdirs();
 		}
 		log.info(file.toString());
+		OutputStream outputStream = null;
 		try {
-			// 将临时文件存储到本地
-			file.transferTo(new File(basePath + fileName));
+			// todo 将临时文件存储到本地
+			// file.transferTo(new File(basePath,fileName));
+			InputStream inputStream = file.getInputStream();
+			outputStream = new FileOutputStream(new File(basePath, fileName));
+			byte[] fileByte = new byte[1024 * 8];
+			int len = 0;
+			while ((len = inputStream.read(fileByte)) != -1) {
+				outputStream.write(fileByte, 0, len);
+			}
+			outputStream.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
 			return ApiResponse.error("文件上传失败");
 		}finally{
 			// 释放资源
-			file = null;
+			// file = null;
+			try {
+				if (outputStream != null)
+				  outputStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		// 封装返回给前端的图片对象
 		ImageDTO imageDTO = new ImageDTO();
-		imageDTO.setFile(uploadFile);
+		imageDTO.setFile(fileName);
 		return ApiResponse.success(imageDTO);
 	}
 

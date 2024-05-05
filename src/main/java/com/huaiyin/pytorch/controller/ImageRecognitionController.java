@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
@@ -46,8 +47,8 @@ public class ImageRecognitionController {
 	 */
 	@ApiOperation(value = "图片识别")
 	@PostMapping("/recognize")
-	public ApiResponse<Record> recognize(@ModelAttribute ModelForm file){
-		return imageRecognitionService.recognize(file);
+	public ApiResponse<Record> recognize(@RequestBody ModelForm file, HttpServletRequest request){
+		return imageRecognitionService.recognize(file,request);
 	}
 
 	/**

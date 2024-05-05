@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
@@ -53,42 +54,44 @@ public class ImageRecognizeServiceImpl extends ServiceImpl<ImageMapper, Record> 
 	private String modelPath;
 
 	@Override
-	public ApiResponse<Record> recognize(ModelForm file) {
-		// 完整的获取文件名
-		Path dir = Paths.get(basePath);
-		Stream<Path> stream = null;
+	public ApiResponse<Record> recognize(ModelForm file, HttpServletRequest request) {
+		// todo 完整的获取文件名
+//		Path dir = Paths.get(basePath);
+//		Stream<Path> stream = null;
 		try {
-			stream = Files.list(dir);
-			Optional<Path> opt = stream
-					.filter(path -> !Files.isDirectory(path))
-					.filter(path -> {
-						String fileWithoutExtension = com.google.common.io.Files.getNameWithoutExtension(path.toString());
-						return fileWithoutExtension.equals(file.getImage());
-					})
-					.findFirst();
-			if (!opt.isPresent()) {
-				return ApiResponse.error("图片不存在");
-			}
-			String fileName = opt.get().getFileName().toString();
+//			stream = Files.list(dir);
+//			Optional<Path> opt = stream
+//					.filter(path -> !Files.isDirectory(path))
+//					.filter(path -> {
+//						String fileWithoutExtension = com.google.common.io.Files.getNameWithoutExtension(path.toString());
+//						return fileWithoutExtension.equals(file.getImage());
+//					})
+//					.findFirst();
+//			if (!opt.isPresent()) {
+//				return ApiResponse.error("图片不存在");
+//			}
+//			String fileName = opt.get().getFileName().toString();
+
+		    String fileName = file.getImage();
 			// 图像识别
 			Record imageRecognize = ImageRecognize.imageRecognize(modelPath,
 					file.getConfThreshold(), file.getNmsThreshold(), basePath + fileName, recognizePath);
-			// 保存识别结果到数据库
-			Long userId = UserHolder.get();
+			// todo 保存识别结果到数据库，这个地方等做好以后再不注释掉
+            //			Long userId = UserHolder.get();
+			Long userId = (Long) request.getSession().getAttribute("user");
 			imageRecognize.setOriginalAddress(file.getImage());
 			imageRecognize.setUserId(userId);
 			save(imageRecognize);
 			return ApiResponse.success(imageRecognize);
-		}catch(IOException e){
-			return ApiResponse.error("文件读取失败");
-		} catch(OrtException e){
+		}catch(OrtException e) {
 			log.error("模型加载失败", e);
 			return ApiResponse.error("模型加载失败");
-		}finally {
-			if (stream != null) {
-				stream.close();
-			}
 		}
+//		}finally {
+//			if (stream != null) {
+//				stream.close();
+//			}
+//		}
 	}
 	/**
 	 * 分页查询

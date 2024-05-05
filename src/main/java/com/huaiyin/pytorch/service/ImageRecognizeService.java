@@ -7,6 +7,8 @@ import com.huaiyin.pytorch.dto.form.ModelForm;
 import com.huaiyin.pytorch.entity.Record;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * ClassName:ImageRecognizeService
  * Package:com.huaiyin.pytorch.service
@@ -22,7 +24,7 @@ public interface ImageRecognizeService extends IService<Record>{
 	 * @param file
 	 * @return
 	 */
-	ApiResponse<Record> recognize(ModelForm file);
+	ApiResponse<Record> recognize(ModelForm file, HttpServletRequest request);
 
 	ApiResponse<Page> list(int page, int pageSize);
 
