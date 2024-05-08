@@ -26,7 +26,7 @@ public interface ImageRecognizeService extends IService<Record>{
 	 */
 	ApiResponse<Record> recognize(ModelForm file, HttpServletRequest request);
 
-	ApiResponse<Page> list(int page, int pageSize);
+	ApiResponse<Page> list(int page, int pageSize,HttpServletRequest request);
 
 	ApiResponse<Record> getRecordById(Long id);
 }

@@ -41,26 +41,28 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
 	@Value("${image.recognize}")
 	private String imageRecognizePath;
-	/*@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		// 登录拦截器
-		registry.addInterceptor(new LoginIntercepter()).
-				excludePathPatterns(
-						"/user/register",
-						"/user/login",
-						"/user/logout",
-						"/v2/api-docs",
-						"/swagger-resources/configuration/ui",
-						"/swagger-resources",
-						"/swagger-resources/configuration/security",
-						"/webjars/**",
-						"/swagger-ui.html",
-						"/doc.html",
-						"/favicon.ico",
-						// 暂时先不拦截，做测试
-						"/common/**"
-						);
-	}*/
+	@Value("${image.upload}")
+	private String upload;
+//	/*@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		// 登录拦截器
+//		registry.addInterceptor(new LoginIntercepter()).
+//				excludePathPatterns(
+//						"/user/register",
+//						"/user/login",
+//						"/user/logout",
+//						"/v2/api-docs",
+//						"/swagger-resources/configuration/ui",
+//						"/swagger-resources",
+//						"/swagger-resources/configuration/security",
+//						"/webjars/**",
+//						"/swagger-ui.html",
+//						"/doc.html",
+//						"/favicon.ico",
+//						// 暂时先不拦截，做测试
+//						"/common/**"
+//						);
+//	}*/
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -70,6 +72,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 		registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 		registry.addResourceHandler("/image/recognize/**").addResourceLocations("file:" + imageRecognizePath);
+		registry.addResourceHandler("/image/upload/**").addResourceLocations("file:" + upload);
        // todo 原始图片路径,如果不展示原始图片，可以不配置,我先注释掉
 //	   registry.addResourceHandler("/image/upload/**").addResourceLocations("classpath:/static/upload/");
 	}

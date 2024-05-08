@@ -59,8 +59,8 @@ public class ImageRecognitionController {
 	 */
 	@ApiOperation(value = "图片分页查询")
 	@GetMapping("/page")
-	public ApiResponse<Page> page(@RequestParam("page") int page,@RequestParam("pageSize") int pageSize){
-		return imageRecognitionService.list(page,pageSize);
+	public ApiResponse<Page> page(@RequestParam("page") int page,@RequestParam("pageSize") int pageSize,HttpServletRequest request){
+		return imageRecognitionService.list(page,pageSize,request);
 	}
 	@ApiOperation(value = "根据id查询记录")
 	@GetMapping("/{id}")

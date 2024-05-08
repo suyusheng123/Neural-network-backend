@@ -8,6 +8,7 @@ import com.huaiyin.pytorch.common.dto.ApiResponse;
 import com.huaiyin.pytorch.dto.form.ModelForm;
 import com.huaiyin.pytorch.dto.form.UserDTOLoginForm;
 import com.huaiyin.pytorch.entity.Record;
+import com.huaiyin.pytorch.entity.User;
 import com.huaiyin.pytorch.mapper.ImageMapper;
 import com.huaiyin.pytorch.service.ImageRecognizeService;
 import com.huaiyin.pytorch.utils.ImageRecognize;
@@ -101,11 +102,13 @@ public class ImageRecognizeServiceImpl extends ServiceImpl<ImageMapper, Record> 
 	 * @return
 	 */
 	@Override
-	public ApiResponse<Page> list(int page, int pageSize) {
+	public ApiResponse<Page> list(int page, int pageSize,HttpServletRequest request) {
 		// 构造分页构造器
 		Page<Record> pageInfo = new Page<>(page, pageSize);
 		// 条件构造器
 		LambdaQueryWrapper<Record> queryWrapper = new LambdaQueryWrapper<>();
+		Long userId = (Long)request.getSession().getAttribute("user");
+		queryWrapper.eq(Record::getUserId,userId);
 		// 添加排序条件
 		queryWrapper.orderByDesc(Record::getCreateTime);
 		// 执行查询
