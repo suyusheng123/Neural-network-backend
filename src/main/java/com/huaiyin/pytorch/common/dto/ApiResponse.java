@@ -42,6 +42,8 @@ public class ApiResponse<T> {
 	 */
 	private Map<String, String> errorMessage;
 
+	private String newError;
+
 	/**
 	 * 成功字段，类型为Boolean。此字段用于指示操作是否成功。
 	 * 默认情况下，它被设置为true。
@@ -80,9 +82,12 @@ public class ApiResponse<T> {
 	}
 
 	public static <T> ApiResponse<T> error(String error) {
-		Map<String, String> errors = new HashMap<>();
-		errors.put("error", error);
-		return error(errors);
+		ApiResponse<T> response = new ApiResponse<>();
+		response.setData(null);
+		response.setCode(ApiResponseCode.SERVICE_ERROR.getCode());
+		response.setCodeMessage(ApiResponseCode.SERVICE_ERROR.getMessage());
+		response.setNewError(error);
+		return response;
 	}
 
 
