@@ -104,7 +104,7 @@ public class ImageRecognizeServiceImpl extends ServiceImpl<ImageMapper, Record> 
 	@Override
 	public ApiResponse<Page> list(int page, int pageSize,HttpServletRequest request) {
 		// 构造分页构造器
-		Page<Record> pageInfo = new Page<>(page, pageSize);
+		Page pageInfo = new Page(page, pageSize);
 		// 条件构造器
 		LambdaQueryWrapper<Record> queryWrapper = new LambdaQueryWrapper<>();
 		Long userId = (Long)request.getSession().getAttribute("user");
@@ -112,11 +112,11 @@ public class ImageRecognizeServiceImpl extends ServiceImpl<ImageMapper, Record> 
 		// 添加排序条件
 		queryWrapper.orderByDesc(Record::getCreateTime);
 		// 执行查询
-		Page<Record> newPage = page(pageInfo, queryWrapper);
-		if (newPage.getRecords().isEmpty()) {
+		page(pageInfo, queryWrapper);
+		if (pageInfo.getRecords().isEmpty()) {
 			return ApiResponse.error("没有数据");
 		}
-		return ApiResponse.success(newPage);
+		return ApiResponse.success(pageInfo);
 	}
 
 	/**
