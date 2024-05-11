@@ -40,13 +40,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.error("MethodArgumentNotValidException:", ex);
-		ApiResponse<Object> response = new ApiResponse<>();
-		Map<String, String> errors = new HashMap<>();
-		ex.getFieldErrors().forEach(p -> {
-			errors.put(p.getField(), p.getDefaultMessage());
-		});
-		response.error(ApiResponseCode.PARAMETER_INVALID.getCode(), errors);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		return new ResponseEntity<>(ApiResponse.error("输入数据格式有问题"),HttpStatus.OK);
 	}
 
 	/**

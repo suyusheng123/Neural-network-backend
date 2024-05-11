@@ -48,7 +48,7 @@ public class UserController {
     @PostMapping("/logout")
     public ApiResponse<String> logout(HttpServletRequest request){
         //清理Session中保存的当前登录员工的id
-        request.getSession().removeAttribute("User");
+        request.getSession().removeAttribute("user");
         return ApiResponse.success("退出成功");
     }
 
