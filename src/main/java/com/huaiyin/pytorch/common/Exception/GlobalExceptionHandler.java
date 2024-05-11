@@ -3,6 +3,7 @@ import ai.onnxruntime.OrtException;
 import com.huaiyin.pytorch.common.constant.ApiResponseCode;
 import com.huaiyin.pytorch.common.dto.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.opencv.core.CvException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,10 +31,10 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler(RuntimeException.class)
-	public ApiResponse<String> handleRuntimeException(RuntimeException e) {
+	@ExceptionHandler(CvException.class)
+	public ApiResponse<String> handleCvException(CvException e) {
 		log.error(e.toString(), e);
-		return ApiResponse.error("服务器异常");
+		return ApiResponse.error("未识别到图像");
 	}
 
 	@Override
@@ -69,5 +70,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		});
 		apiResponse.error(ApiResponseCode.PARAMETER_INVALID.getCode(), errors);
 		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+	}
+	@ExceptionHandler(RuntimeException.class)
+	public ApiResponse<String> handleRuntimeException(RuntimeException e) {
+		log.error(e.toString(), e);
+		return ApiResponse.error("服务器异常");
 	}
 }
