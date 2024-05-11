@@ -29,7 +29,7 @@ public class UserController {
     /**
      * 员工登录
      * @param request
-     * @param User
+     * @param user
      * @return
      */
     @ApiOperation("用户登陆")
